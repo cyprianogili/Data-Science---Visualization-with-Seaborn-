@@ -35,10 +35,11 @@ Seaborn automatically applies beautiful themes, sets good color palettes, adds g
 
 
 
-''python
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+```
 
 
 2. Seaborn vs Matplotlib
@@ -53,13 +54,13 @@ Matplotlib styles and customizes it
 # Seaborn draws the chart
 sns.scatterplot(data=df, x='Age', y='Fare', hue='Sex', size='Pclass')
 
-# Matplotlib adds finishing touches
+```Matplotlib adds finishing touches
 plt.title('Age vs Fare by Sex and Class')
 plt.xlabel('Passenger Age (years)')
 plt.ylabel('Fare Paid ($)')
 plt.show()
 
-
+```
 3. Understanding Your Data - df.info()
 df.info() is always your FIRST step with any new dataset. It tells you:
 
@@ -68,7 +69,9 @@ How many columns you have
 Which columns have missing data
 What type of data each column contains
 
+```python
 df.info()
+```
 
 
 
@@ -91,16 +94,21 @@ Data columns (total 12 columns):
  11  Embarked     889 non-null    object    <- 2 missing
 Data types explained:
 DtypeMeaningExampleint64Whole numbers1, 2, 3float64Decimal numbers23.5, 7.25objectText/String"male", "John Smith"
+
 How to check missing values directly:
-pythondf.isnull().sum()
+```python
+df.isnull().sum()
+```
 
 4. Types of Plots
 Scatter Plot
 Used when you have TWO number columns and want to see if there is any relationship between them.
 Rule: Scatter plots work with NUMBERS ONLY!
-pythonsns.scatterplot(data=df, x='Age', y='Fare', hue='Sex', size='Pclass')
+```python
+sns.scatterplot(data=df, x='Age', y='Fare', hue='Sex', size='Pclass')
 plt.title('Age vs Fare by Sex and Class')
 plt.show()
+```
 When to use:
 
 Number column vs Number column
@@ -110,14 +118,16 @@ Example: Does Age affect Fare?
 
 Histogram
 Shows the distribution of a numerical variable by dividing data into bins and counting observations in each bin.
-pythonplt.figure(figsize=(8, 5))
+
+```python
+plt.figure(figsize=(8, 5))
 sns.histplot(data=df, x='Age', kde=True, bins=20)
 plt.title('Distribution of Age')
-
-
 plt.xlabel('Age')
 plt.ylabel('Count')
 plt.show()
+
+```
 When to use:
 
 ONE number column only
@@ -127,12 +137,16 @@ Example: How are passenger ages distributed?
 
 KDE Plot
 KDE (Kernel Density Estimate) is a smooth curve that shows where most of your data is concentrated. Smoother than histograms and not affected by bin sizes.
-pythonplt.figure(figsize=(8, 5))
+```
+python
+plt.figure(figsize=(8, 5))
 sns.kdeplot(data=df, x='Fare', fill=True)
 plt.title('Density Plot of Fare')
 plt.xlabel('Fare')
 plt.ylabel('Density')
 plt.show()
+
+```
 Simple rule:
 
 ONE column = KDE
@@ -142,37 +156,52 @@ Low curve = few values there
 
 Regression Plot
 Used to visualize the linear relationship (trend) between two variables with a regression line and confidence interval.
-pythonplt.figure(figsize=(8, 6))
+
+
+```python
+plt.figure(figsize=(8, 6))
 sns.regplot(data=df, x='Age', y='Fare', scatter_kws={'alpha':0.3})
 plt.title('Linear Relationship between Age and Fare')
 plt.xlabel('Age')
 plt.ylabel('Fare')
 plt.show()
+
+```
 Reading the regression line:
 Line directionMeaningGoes UP ↗️Positive trendGoes DOWN ↘️Negative trendStays FLAT →No relationship
 Two functions:
-
+```
 sns.regplot - Simple, quick analysis
 sns.lmplot - More powerful, can split by groups using hue
-
+```
 
 Box Plot
 Excellent for showing the distribution of a numerical variable across different categories. Shows median, quartiles and outliers.
-pythonplt.figure(figsize=(10, 6))
+
+```
+python
+plt.figure(figsize=(10, 6))
 sns.boxplot(data=df, x='Pclass', y='Age', hue='Survived')
 plt.title('Age Distribution by Pclass and Survival')
 plt.xlabel('Passenger Class')
 plt.ylabel('Age')
 plt.show()
+
+```
 What each part means:
 PartMeaningMiddle lineMedian - the middle valueThe boxWhere the middle 50% of data livesWhiskersFull range of normal valuesDots outsideOutliers - unusual values
 
 Violin Plot
 Similar to box plots but also shows the probability density of data at different values. Combines Box Plot + KDE in one chart.
-pythonplt.figure(figsize=(10, 6))
+
+```
+python
+plt.figure(figsize=(10, 6))
 sns.violinplot(data=df, x='Pclass', y='Age', hue='Survived')
 plt.title('Age Distribution by Pclass and Survival (Violin Plot)')
 plt.show()
+
+```
 Reading a Violin Plot:
 
 Wide part = many passengers at that age
@@ -183,9 +212,14 @@ Box PlotViolin PlotShows medianYesYesShows spreadYesYesShows outliersYesYesShows
 
 Count Plot
 Shows the count of observations in each category using bars. Essentially a histogram for categorical variables.
-pythonsns.countplot(data=df, x='Sex', hue='Survived')
+
+```python
+
+sns.countplot(data=df, x='Sex', hue='Survived')
 plt.title('Count of Passengers by Sex')
 plt.show()
+
+```
 Simple rule:
 
 Numbers = Histogram
@@ -200,9 +234,13 @@ How many survived vs died?
 
 Pair Plot
 Creates a grid of scatter plots for each pair of numerical variables and histograms/KDE plots on the diagonal.
-pythonsns.pairplot(df, hue='Survived')
+
+```python
+sns.pairplot(df, hue='Survived')
 plt.suptitle('Pairwise Relationships of Age, Fare, Pclass, and Survival')
 plt.show()
+
+```
 What it shows:
 
 Diagonal boxes = KDE of each individual column
@@ -212,10 +250,14 @@ One chart replaces many individual charts!
 
 Heatmap
 Turns a correlation matrix into colors so patterns are easy to see at a glance.
-pythonplt.figure(figsize=(10, 8))
+
+```python
+plt.figure(figsize=(10, 8))
 sns.heatmap(correlation_matrix, annot=True, fmt='.2f', cmap='coolwarm')
 plt.title('Correlation Heatmap')
 plt.show()
+
+```
 Reading colors:
 ColorValueMeaningDark RedClose to +1Strong positive relationshipLight PinkAround +0.2Weak positive relationshipWhiteAround 0No relationshipLight BlueAround -0.2Weak negative relationshipDark BlueClose to -1Strong negative relationshipDiagonalAlways 1.0Every column is perfect with itself
 
@@ -273,6 +315,10 @@ Titanic Dataset - 891 passengers, 12 columns
 ColumnDescriptionPassengerIdUnique ID for each passengerSurvived0 = No, 1 = YesPclassTicket class - 1 = First, 2 = Second, 3 = ThirdNamePassenger nameSexMale or FemaleAgePassenger ageSibSpNumber of siblings/spouses on boardParchNumber of parents/children on boardTicketTicket numberFareTicket priceCabinCabin numberEmbarkedPort of embarkation - C, Q, S
 
 Libraries Used
+```
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 pythonimport pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
